@@ -2,7 +2,7 @@
   "name": "competitonsite",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://badmintonCompetitiion.github.io",
+  "homepage": "https://badmintoncompetition.github.io",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
