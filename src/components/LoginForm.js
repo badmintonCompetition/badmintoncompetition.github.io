@@ -1,4 +1,4 @@
-import './commonStyles.css'
+import './w3style.css'
 
 const LoginForm = (props) => {
 
@@ -13,13 +13,18 @@ const LoginForm = (props) => {
 		props.setCurrentForm(Statistics)
 	}
 	return (
-	<div className='container'>
-		<div className='center'>
-			<button onClick={handleRootBtn}>Root</button>
-			<button onClick={handleInputBtn}>Input</button>
-			<button onClick={handleRecordsBtn}>Records</button>
-		</div>
-	</div>
+		<>
+			<div className='w3-padding-64'>
+				<h1>Main Menu</h1>
+			</div>
+			<div className='w3-padding-64' style={{fontSize:"1.2em"}}>
+				<button className='w3-button w3-black w3-block w3-hover-teal w3-padding-16' onClick={handleInputBtn}>Input</button>
+				<button className='w3-button w3-black w3-block w3-hover-dark-grey w3-padding-16' onClick={handleRecordsBtn}>Records</button>
+			</div>
+			<div className='w3-padding-64'>
+				<button className='w3-button w3-black w3-block w3-hover-white w3-padding-16' onClick={handleRootBtn}>Root</button>
+			</div>
+		</>
 	)
 }
 

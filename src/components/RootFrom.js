@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import RootPanel from './RootPanel';
-import './commonStyles.css'
+import './w3style.css'
+
 const RootForm = (props) => {
 	const [inputstr, setinputstr] = useState('');
 	const pass = 'qwer1234'
@@ -28,11 +29,11 @@ const RootForm = (props) => {
 		<>
 		<button onClick={handleReturnBtn}>Return</button>
 		{passed ? <RootPanel/> : 
-		<div className='container'>
-			<form className='center' onSubmit={handleSubmit}>
-				<label>Password:</label>
-				<input type={"password"} value={inputstr} onChange={handleInputChange}></input>
-				<input type={"submit"} value="Submit"></input>
+		<div className='w3-container'>
+			<form className='w3-padding-64' onSubmit={handleSubmit}>
+				<label className='w3-left'>Password:</label>
+				<input className='w3-input' type={"password"} value={inputstr} onChange={handleInputChange}></input>
+				<input className='w3-button w3-teal' type={"submit"} value="Submit"></input>
 			</form>
 		</div>
 		}
