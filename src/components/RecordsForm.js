@@ -17,7 +17,7 @@ const RecordsForm = (props) => {
 		<div>
 			<div className='w3-padding-16'>
 			<button className="w3-button w3-teal w3-left" onClick={handleReturn}>Return</button>
-		</div>
+			</div>
 			<div className='w3-padding-32'>
 				<h2>Records Sheet</h2>
 				<p>Game status: {(matchData === "") ? "Loading" : (matchData["started"] ? <span className='w3-green'>ON </span>: <span className='w3-red'>OFF</span>)}</p>

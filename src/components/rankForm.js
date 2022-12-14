@@ -4,6 +4,10 @@ import './w3style.css'
 const RankForm = (props) => {
 	const [matchData, setMatchData] = useState("")
 	const [teamData, setTeamData] = useState("")
+	const [resultBuf, setResultBuf] = useState("")
+	const [scoreBuf, setScoreBuf] = useState([0,0,0,0,0])
+	const [pointsBuf, setPointsBuf] = useState([0,0,0,0,0])
+
 
 	useEffect(() => {
 		viewcontent("recordsForm",(d) => {
@@ -20,7 +24,10 @@ const RankForm = (props) => {
 			setScoreBuf(sb)
 			setPointsBuf(ps)
 		})
-	})
+		})	
+	},[])
+
+	useEffect(() => {
 		viewcontent("teamName", (d) => {
 			let data = JSON.parse(d)
 			let tmpBuf = [...scoreBuf], tmpBuf2 = [...scoreBuf]
@@ -38,11 +45,7 @@ const RankForm = (props) => {
 			})
 			setResultBuf(resBuf)
 		})
-	},[])
-
-	const [resultBuf, setResultBuf] = useState("")
-	const [scoreBuf, setScoreBuf] = useState([0,0,0,0,0])
-	const [pointsBuf, setPointsBuf] = useState([0,0,0,0,0])
+	}, [scoreBuf])
 
 	function exch(buf, i, j) {
 		const tmp = buf[i]
