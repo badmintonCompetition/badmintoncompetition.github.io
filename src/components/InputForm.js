@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { updateForm, viewcontent } from './Gallery';
 import './w3style.css'
 
 const InputForm = (props) => {
@@ -7,6 +8,9 @@ const InputForm = (props) => {
 	const [team2, setTeam2] = useState('');
 	const [score1, setScore1] = useState(0);
 	const [score2, setScore2] = useState(0);
+	const [teamData, setTeamData] = useState("");
+	const [nameData, setNameData] = useState([]);
+	const [loaded, setLoaded] = useState(false)
 
 	const handleTurnChange = (e) => {
 		setTurn(e.target.value)
@@ -30,14 +34,38 @@ const InputForm = (props) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		alert("Not implelemted")
+		let newEntry = {"team1": parseInt(team1), "team2": parseInt(team2), "turn": turn, "points1": parseInt(score1), "points2": parseInt(score2)}
+		console.log("new entry:")
+		console.log(newEntry)
+		if (updateForm(newEntry) === -1)
+		{
+			alert("Game not started")
+			return
+		}
+
 	}
 
 	const handleReturn = () => {
 		props.setCurrentForm(1);
 	}
 
-	return (
+	useEffect(() => {
+		// viewcontent("recordsForm", (d) => setTeamData(JSON.parse(d)))
+		viewcontent("teamName", (d) => {
+			let data = JSON.parse(d)
+			let tmp = []
+			data["names"].forEach((element, i) => {
+				tmp.push({"i":i, "element":(element === "" ? i+1 : element)})
+			})
+			setNameData(tmp)
+			setTeam1(1)
+			setTeam2(1)
+			setLoaded(true)
+		})
+	}, [])
+
+	if (loaded === false) return <p>Loading</p>
+	else return (
 		<>
 		<div className='w3-padding-16'>
 			<button className="w3-button w3-teal w3-left" onClick={handleReturn}>Return</button>
@@ -57,16 +85,12 @@ const InputForm = (props) => {
 				<br/>
 				<label className='w3-padding-small'>队伍1:
 					<select value={team1} onChange={handleTeam1Change}>
-						<option value="solo">单</option>
-						<option value="duo1">双1</option>
-						<option value="duo2">双2</option>
+						{nameData.map((e) => <option  value={e["i"]+1}>{e["element"]}</option>)}
 					</select>
 				</label>
 				<label className='w3-padding-small'>队伍2:
 					<select value={team2} onChange={handleTeam2Change}>
-						<option value="solo">单</option>
-						<option value="duo1">双1</option>
-						<option value="duo2">双2</option>
+						{nameData.map((e) => <option  value={e["i"]+1}>{e["element"]}</option>)}
 					</select>
 				</label>
 			</div>

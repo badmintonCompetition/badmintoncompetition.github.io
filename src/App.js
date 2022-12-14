@@ -22,8 +22,9 @@ function App() {
       <div className='w3-half w3-indigo w3-container' style={{minHeight:'800px'}}>
         <RankForm/>
 		  </div>
-      <footer class="w3-container w3-black w3-padding-16">
-        <p>Made by <a href="https://yifeijing.github.com" target="_blank">rvalue</a></p>
+      <footer class="w3-container w3-black w3-padding-top-32">
+        <p>Powered by React, Github Page, and AWS</p>
+        <p>Created by rvalue --- yifei.j@ik.me</p>
       </footer>
     </div>
   );

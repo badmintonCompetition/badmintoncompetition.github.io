@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { viewcontent } from "./Gallery"
+import { editContent, resetForm, resetNames, viewcontent } from "./Gallery"
 import './w3style.css'
 
 const RootPanel = (props) => {
@@ -9,9 +9,67 @@ const RootPanel = (props) => {
 		// setretStr('Submithandled')
 		e.preventDefault();
 		// Parse cmd
-		if (cmd.includes("test")) {
+		if (cmd.search("test") === 0) {
 			if (cmd.includes("connection")) {
 				viewcontent("tmp2", setretStr)
+			}
+			else if (cmd.includes("write")) {
+				const strArray = cmd.split(" ")
+				if (strArray.length === 2) {
+					editContent("tmp2", "test write")
+					return
+				}
+				editContent("tmp2", strArray[2])
+			}
+			else if (cmd.includes("reset")) {
+				resetForm()
+				viewcontent("recordsForm", setretStr)
+			}
+		}
+		else if (cmd.search("get") === 0) {
+			const cmdArray = cmd.split(" ")
+			viewcontent(cmdArray[1], setretStr)
+		}
+		else if (cmd.search("start") === 0) {
+			if (cmd.search("match") !== -1) {
+				let data = ""
+				viewcontent("recordsForm", (d) => {
+					data = JSON.parse(d)
+					data["started"] = true
+					editContent("recordsForm", JSON.stringify(data))
+				})
+			}
+		}
+		else if (cmd.search("end") === 0) {
+			if (cmd.search("match") !== -1) {
+				let data = ""
+				viewcontent("recordsForm", (d) => {
+					data = JSON.parse(d)
+					data["started"] = false
+					editContent("recordsForm", JSON.stringify(data))
+				})
+			}
+		}
+		else if (cmd.search("set") === 0)
+		{
+			if (cmd.includes("name")) {
+				let data = ""
+				const cmdArray = cmd.split(" ")
+				console.log(cmdArray)
+				// The right method the use viewcontent is to put all ops into the function pointer
+			 	viewcontent("teamName", (d) => {
+					data = JSON.parse(d)
+					data["names"][parseInt(cmdArray[2])-1] = cmdArray[3]
+					editContent("teamName", JSON.stringify(data))
+				})
+			}
+		}
+		else if (cmd.search("reset") === 0) {
+			if (cmd.includes("records")) {
+				resetForm()
+			}
+			else if (cmd.includes("names")) {
+				resetNames()
 			}
 		}
 	}
