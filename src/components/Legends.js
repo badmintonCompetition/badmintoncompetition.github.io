@@ -24,6 +24,7 @@ const Legends = (props) => {
 				<li>Ma</li>
 				<li>刘博文</li>
 				<li>阿雄</li>
+				<li>kinou</li>
 			</ul>
 		</div>
 		<div className="w3-row">
