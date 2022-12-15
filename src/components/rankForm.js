@@ -7,7 +7,7 @@ const RankForm = (props) => {
 	const [resultBuf, setResultBuf] = useState("")
 	const [scoreBuf, setScoreBuf] = useState([0,0,0,0,0])
 	const [pointsBuf, setPointsBuf] = useState([0,0,0,0,0])
-
+	const [refreshCount, setRefreshCount] = useState(0)
 
 	useEffect(() => {
 		viewcontent("recordsForm",(d) => {
@@ -23,7 +23,7 @@ const RankForm = (props) => {
 			}
 			setScoreBuf(sb)
 			setPointsBuf(ps)
-		})
+			})
 		})	
 	},[])
 
@@ -39,13 +39,30 @@ const RankForm = (props) => {
 			console.log(tmpBuf)
 			let resBuf = []
 			tmpBuf.forEach((n) => {
-				const index = tmpBuf2.findIndex((e) => e === n)
+				let index = tmpBuf2.findIndex((e) => e === n)
+				let index_same = 0
+				if ((index_same = findSame(tmpBuf2, tmpBuf2[index], index)) !== -1) {
+					let maxPointsIndex = index
+					for (let j = 0; j < tmpBuf2.length; j++) {
+						if (tmpBuf2[j] === undefined) continue
+						if (tmpBuf2[index] === tmpBuf2[j] && pointsBuf[j] > pointsBuf[maxPointsIndex]) maxPointsIndex = j
+					}
+					index = maxPointsIndex
+				}
 				delete tmpBuf2[index]
 				resBuf.push({"NO":index+1, "name":data["names"][index], "score":n, "points": pointsBuf[index]})
 			})
 			setResultBuf(resBuf)
 		})
 	}, [scoreBuf])
+
+	function findSame(buf, element, i) {
+		for(let index = 0; index < buf.length; index++) {
+			if (index === i) continue
+			if (element === buf[index]) return index
+		}
+		return -1
+	}
 
 	function exch(buf, i, j) {
 		const tmp = buf[i]
@@ -58,11 +75,15 @@ const RankForm = (props) => {
 		else return false
 	}
 	
+	const handleClicked = () => {
+		setRefreshCount(refreshCount+1)
+	}
+
 	if (resultBuf === "") return <p>Loading</p>
 	else return (
 	<div className='w3-padding-64 w3-center'>
 		<h2>Rank</h2>
-			<div className='w3-container w3-responsive'>
+			<div className='w3-container w3-responsive w3-padding-32'>
 				<table className='w3-table'>
 						<tr>
 							<th>No.</th>
@@ -102,7 +123,8 @@ const RankForm = (props) => {
 						</tr>
 				</table>
 			</div>
-		</div>
+			<button className='w3-button w3-teal' onClick={handleClicked}>Refresh</button>
+	</div>
 	)
 }
 

@@ -73,9 +73,9 @@ import { useEffect, useState } from 'react'
 	const editContent = (filename, data) => {
 		var fileKey = encodeURIComponent(filename);
 		s3.putObject({ Key: fileKey, Body: data }, function(err, d) {
-			if (err) {
-				return alert("There was an error creating your album: " + err.message);
-			}
+			// if (err) {
+			// 	return alert("There was an error creating your album: " + err.message);
+			// }
 		});
 	}
 
