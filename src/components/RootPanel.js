@@ -102,18 +102,34 @@ const RootPanel = (props) => {
 					// Make the new template json
 					const template = {
 						"started":false,
-						"data": []
+						"data": [],
+						"set": 0
 					}
 					const count = parseInt(cmdArray[2])
-					for (let index = 0; index < count; index++) {
-						for (let j = index+1; j < count; j++) {
-							template["data"].push({"team1":resBuf[index], "team2": resBuf[j], "turn":"solo", "points1":0, "points2":0})
-							template["data"].push({"team1":resBuf[index], "team2": resBuf[j], "turn":"duo1", "points1":0, "points2":0})
-							template["data"].push({"team1":resBuf[index], "team2": resBuf[j], "turn":"duo2", "points1":0, "points2":0})
-						}
+					if (count === 5) {
+						template["set"] = 1
+						template["data"].push({"team1":resBuf[2], "team2": resBuf[1], "turn":"solo", "points1":0, "points2":0})
+						template["data"].push({"team1":resBuf[2], "team2": resBuf[1], "turn":"duo1", "points1":0, "points2":0})
+						template["data"].push({"team1":resBuf[4], "team2": resBuf[3], "turn":"solo", "points1":0, "points2":0})
+						template["data"].push({"team1":resBuf[4], "team2": resBuf[3], "turn":"duo1", "points1":0, "points2":0})
 					}
+					else if (count === 4) {
+						template["set"] = 2
+						template["data"].push({"team1":resBuf[0], "team2": resBuf[2], "turn":"solo", "points1":0, "points2":0})
+						template["data"].push({"team1":resBuf[0], "team2": resBuf[2], "turn":"duo1", "points1":0, "points2":0})
+						template["data"].push({"team1":resBuf[1], "team2": resBuf[3], "turn":"solo", "points1":0, "points2":0})
+						template["data"].push({"team1":resBuf[1], "team2": resBuf[3], "turn":"duo1", "points1":0, "points2":0})
+					}
+					// for (let index = 0; index < count; index++) {
+					// 	for (let j = index+1; j < count; j++) {
+					// 		template["data"].push({"team1":resBuf[index], "team2": resBuf[j], "turn":"solo", "points1":0, "points2":0})
+					// 		template["data"].push({"team1":resBuf[index], "team2": resBuf[j], "turn":"duo1", "points1":0, "points2":0})
+					// 		template["data"].push({"team1":resBuf[index], "team2": resBuf[j], "turn":"duo2", "points1":0, "points2":0})
+					// 	}
+					// }
 					console.log(template)
 					editContent("recordsForm", JSON.stringify(template))
+					props.setIsFinal(true)
 				})	
 			}
 		}
@@ -124,6 +140,17 @@ const RootPanel = (props) => {
 			else if (cmd.includes("names")) {
 				resetNames()
 			}
+		}
+		else if (cmd.search("help") === 0) {
+			setretStr("test connection | test write <content> | test rest \n get recordsForm | get teamName \n start/end match \n set name teamNO name | set final count=[4|5] | reset records/names \n delete n")
+		}
+		else if (cmd.search("delete") === 0) {
+			viewcontent("recordsForm", (d) => {
+				let data = JSON.parse(d)
+				let cmdArray = cmd.split(" ")
+				data["data"] = data["data"].splice(parseInt(cmdArray[1]))
+				editContent("recordsForm", JSON.stringify(data))
+			})
 		}
 	}
 	const handleChanged = (e) => {

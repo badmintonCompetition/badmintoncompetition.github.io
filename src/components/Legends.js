@@ -2,6 +2,7 @@ import "./w3style.css"
 import p1 from './img/cup1_1.jpeg'
 import p2 from './img/cup1_2.jpeg'
 import p3 from './img/cup1_3.jpeg'
+import p4 from './img/cup1_4.JPG'
 
 const Legends = (props) => {
 	const handleReturn = () => {
@@ -42,6 +43,9 @@ const Legends = (props) => {
 			{/* <div className="w3-half">
 				<img src={p2} style={{"width": "100%"}}></img>
 			</div> */}
+		</div>
+		<div className="w3-row">
+			<img src={p4} style={{"width": "100%"}}></img>
 		</div>
 		</>
 	)

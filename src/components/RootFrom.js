@@ -28,7 +28,7 @@ const RootForm = (props) => {
 	return (
 		<>
 		<button onClick={handleReturnBtn}>Return</button>
-		{passed ? <RootPanel/> : 
+		{passed ? <RootPanel isFinal={props.isFinal} setIsFinal={props.setIsFinal}/> : 
 		<div className='w3-container'>
 			<form className='w3-padding-64' onSubmit={handleSubmit}>
 				<label className='w3-left'>Password:</label>

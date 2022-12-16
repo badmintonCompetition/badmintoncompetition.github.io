@@ -103,25 +103,45 @@ import { useEffect, useState } from 'react'
 			let content_ = JSON.parse(contents)
 
 			if (!content_['started']) {
-				alert("Game not started")
+				return -1
 			}
-
+			let has = false
 			content_["data"] = content_["data"].map((entry) => {
 				if (matchEntry(entry, newEntry)) {
+					has = true
 					return newEntry
 				}
-				else return entry
+				else {
+					return entry
+				}
 			})
 		
+			if (!has && content_["set"] === 1 || content_["set"] === 2) {
+				content_["data"].push(newEntry)
+			}
+
 			console.log("New content_:")
 			console.log(content_)
 			editContent("recordsForm", JSON.stringify(content_))
 		})
 	}
 
+	function findMatch(data, team1, team2) {
+		data.forEach((e) => {
+			if (e["team1"] === team1 && e["team2"] === team2) return true
+			if (e["team1"] === team2 && e["team2"] === team2) return true
+		})
+		return false
+	}
+
+	const checkZero = (e) => {
+		if (e["points1"] === 0 && e["points2"] === 0) return true
+		else return false
+	}
 	const resetForm = () => {
 		const template = {
 			"started":false,
+			"set": 0,
 			"data": [
 			{
 				"team1":1,

@@ -25,7 +25,7 @@ const RankForm = (props) => {
 			setPointsBuf(ps)
 			})
 		})	
-	},[])
+	},[refreshCount])
 
 	useEffect(() => {
 		viewcontent("teamName", (d) => {
@@ -86,10 +86,10 @@ const RankForm = (props) => {
 			<div className='w3-container w3-responsive w3-padding-32'>
 				<table className='w3-table'>
 						<tr>
-							<th>No.</th>
-							<th>Team Name</th>
-							<th>Score</th>
-							<th>Points</th>
+							<th>队伍号</th>
+							<th>队伍名</th>
+							<th>胜场</th>
+							<th>总分</th>
 						</tr>
 						<tr className='w3-deep-orange'>
 							<td>{resultBuf[0]["NO"]}</td>

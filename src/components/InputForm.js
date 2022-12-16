@@ -42,7 +42,7 @@ const InputForm = (props) => {
 			alert("Game not started")
 			return
 		}
-
+		alert("交了！")
 	}
 
 	const handleReturn = () => {
@@ -58,6 +58,7 @@ const InputForm = (props) => {
 				tmp.push({"i":i, "element":(element === "" ? i+1 : element)})
 			})
 			setNameData(tmp)
+			setTurn('solo')
 			setTeam1(1)
 			setTeam2(1)
 			setLoaded(true)
